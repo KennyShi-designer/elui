@@ -9,7 +9,7 @@ https://kennyshi-designer.github.io/elui/Message/index.html
 选项卡效果
 https://kennyshi-designer.github.io/elui/Tabs/index.html
 
-悬浮效果
+悬浮/点击 效果
 https://kennyshi-designer.github.io/elui/Tooltip/index.html
 
 弹窗效果
