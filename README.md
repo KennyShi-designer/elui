@@ -11,3 +11,6 @@ https://kennyshi-designer.github.io/elui/Tabs/index.html
 
 悬浮效果
 https://kennyshi-designer.github.io/elui/Tooltip/index.html
+
+弹窗效果
+https://kennyshi-designer.github.io/elui/wheel-dialog/index.html
