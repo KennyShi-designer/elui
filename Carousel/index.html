@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            border-radius: 4px;
+            box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.3);
+            padding: 16px;
+        }
+
+        .carousel {
+            position: relative;
+            height: 200px;
+        }
+
+        .carousel .panels > a {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            opacity: 0;
+            z-index: 0;
+        }
+        .carousel .panels > a.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        .carousel .panels > a:nth-child(even) {
+            background-color: lightskyblue;
+        }
+
+        .carousel .panels > a:nth-child(odd) {
+            background-color: lightpink;
+        }
+        .carousel .arrow {
+            position: absolute;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 50%;
+            width: 32px;
+            height: 32px;
+            background: rgba(31, 45, 61, 0.11);
+            border: none;
+            border-radius: 50%;
+        }
+        .carousel .arrow-pre {
+            left: 10px;
+            transform: translate(-10px,-50%);
+            opacity: 0;
+            transition: all .3s;
+            outline: none;
+        }
+        .carousel:hover .arrow-pre {
+            transform: translate(0,-50%);
+            opacity: 1;
+        }
+
+        .carousel .arrow-next {
+            right: 10px;
+            transform: translate(10px,-50%);
+            opacity: 0;
+            transition: all .3s;
+            outline: none;
+        }
+        .carousel:hover .arrow-next {
+            transform: translate(0,-50%);
+            opacity: 1;
+        }
+        .carousel .arrow::before {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-left: 1px solid #fff;
+            border-top: 1px solid #fff;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            trans
+        }
+        .carousel .arrow-next::before {
+            transform: rotate(135deg);
+        }
+        .indicators {
+            position: absolute;
+            z-index: 100;
+            left: 50%;
+            bottom: 10px;
+            transform: translateX(-50%);
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .indicators > li {
+            display: inline-block;
+            padding: 5px 0;
+            cursor: pointer;
+        }
+        .indicators > li::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 2px;
+            background: #c0c4cc;
+            border-radius: 6px;
+        }
+        .indicators > li.active::before {
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Carousel</h2>
+        <div class="carousel">
+            <div class="panels">
+                <a class="active" href="#0">0</a>
+                <a href="#1">1</a>
+                <a href="#2">2</a>
+                <a href="#3">3</a>
+            </div>
+            <div class="arrows">
+                <button class="arrow arrow-pre"></button>
+                <button class="arrow arrow-next"></button>
+            </div>
+            <div class="indicators">
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const $ = s => document.querySelector(s)
+        const $$ = s => document.querySelectorAll(s)
+
+
+        const $pre = $('.arrow-pre')
+        const $next = $('.arrow-next')
+        const $$indicators = $$('.indicators > li')
+
+        const $$panels = $$('.panels > a')
+
+        const getIndex = () => [...$$indicators].indexOf($('.indicators .active'))
+        const getPreIndex = () => (getIndex() - 1 + $$indicators.length) % $$indicators.length
+        const getNextIndex = () => (getIndex() + 1 + $$indicators.length) % $$indicators.length
+
+        const setPage = index => {
+            $$panels.forEach($panel => $panel.classList.remove('active'))
+            $$panels[index].classList.add('active')
+        }
+        const setIndicator = index => {
+            $$indicators.forEach($indicator => $indicator.classList.remove('active'))
+            $$indicators[index].classList.add('active')
+        }
+        
+        $pre.onclick = function() {
+            let index = getPreIndex()
+            setPage(index)
+            setIndicator(index)
+        }
+        $next.onclick = function() {
+            let index = getNextIndex()
+            setPage(index)
+            setIndicator(index)
+        }
+        $$indicators.forEach($indicators => $indicators.onclick = function(e) {
+            let index = [...$$indicators].indexOf(e.target)
+            setIndicator(index)
+            setPage(index)
+        })
+
+        // 如果页面上有其他的效果，混在一起时，页面就会特别的长：
+        // 可读性变差，找到代码的位置就很困难
+        // 全局变量的命名很容易重复
+
+        
+
+    </script>
+</body>
+
+</html>
